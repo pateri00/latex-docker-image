@@ -1,0 +1,24 @@
+FROM ubuntu:22.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt update -y && apt upgrade -y
+RUN apt install make texlive latexmk texlive-pictures -y
+RUN apt install texlive-publishers texlive-science texlive-fonts-extra texlive-latex-extra -y
+RUN apt install biber texlive-bibtex-extra -y
+RUN apt-get -y install locales
+RUN apt-get -y install texlive-lang-german
+
+# The 'bbm' package insists on generating stuff in the home directory. In
+# order to guarantee access to the home directory no matter the user the
+# docker container is run with, create a temporary one anyone can write to
+RUN mkdir /tmp/home
+RUN chmod -R 777 /tmp/home
+ENV HOME=/tmp/home
+
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
+    locale-gen
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8  
+
