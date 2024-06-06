@@ -9,6 +9,7 @@ RUN apt install biber texlive-bibtex-extra -y
 RUN apt-get -y install locales
 RUN apt-get -y install texlive-lang-german
 RUN apt-get -y install git
+RUN apt-get -y install nano
 
 # The 'bbm' package insists on generating stuff in the home directory. In
 # order to guarantee access to the home directory no matter the user the
@@ -16,6 +17,8 @@ RUN apt-get -y install git
 RUN mkdir /tmp/home
 RUN chmod -R 777 /tmp/home
 ENV HOME=/tmp/home
+
+ADD .latexmkrc $HOME/.latexmkrc
 
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
     locale-gen
