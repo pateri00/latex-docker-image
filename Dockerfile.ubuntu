@@ -1,4 +1,5 @@
 FROM ubuntu:22.04
+FROM latexindent.pl:3.24.1
 
 ARG DEBIAN_FRONTEND=noninteractive
 
